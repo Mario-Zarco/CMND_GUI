@@ -7,7 +7,7 @@ import re
 
 from cmnd_hand_data_interactive import HandDataInteractive
 # from cmnd_data_handler import HandDataHandler
-# from cmnd_plot_utils import SubplotAllocation, get_sphere
+from cmnd_plot_utils import SubplotAllocation, get_sphere
 # from cmnd_preprocessing_methods import PreprocessingHandData
 # from cmnd_log_file import HandDataLogFile
 # from cmnd_config_file import HandDataConfigFile
@@ -17,15 +17,15 @@ class HandDataVisualization:
 
     def __init__(self):
 
-        self.data_handler = HandDataHandler()
+        # self.data_handler = HandDataHandler()
 
-        self.log_file = HandDataLogFile()
+        # self.log_file = HandDataLogFile()
 
-        self.config_file = HandDataConfigFile()
-        self.config_file.create_config_data_file()
+        # self.config_file = HandDataConfigFile()
+        # self.config_file.create_config_data_file()
 
-        self.preprocessing = PreprocessingHandData()
-        self.preprocessing.calculate_mean_sample_frequency()
+        # self.preprocessing = PreprocessingHandData()
+        # self.preprocessing.calculate_mean_sample_frequency()
 
         self.trial_number = 1
         self.max_trial_number = self.data_handler.n_files
@@ -101,7 +101,7 @@ class HandDataVisualization:
             self.fig_tracker_1.suptitle("")
 
         self.fig_tracker_1.canvas.manager.set_window_title("Trial " + str(self.trial_number))
-        self.show_mean_sample_frequency()
+        # self.show_mean_sample_frequency()
 
         self.temp_processed_trial = self.data_handler.get_trial_data_hand_tracker(self.trial_number)
         self.processed_trial = self.data_handler.get_trial_data_reach_trajectories(self.trial_number)
@@ -125,12 +125,12 @@ class HandDataVisualization:
             ax.relim()
             ax.autoscale()
         # self.relim_autoscale_3d()
-        self.apply_limits(self.t_limits, self.x_limits, self.y_limits, self.z_limits)
+        # self.apply_limits(self.t_limits, self.x_limits, self.y_limits, self.z_limits)
         self.fig_tracker_1.canvas.draw()
 
-    def show_mean_sample_frequency(self):
-        sf_mean = self.log_file.get_trial_data_from_log('Mean Sample Frequency', self.trial_number)
-        self.axes_tracker_1[0].set_title(str(sf_mean) + " Hz", fontsize=15)
+    # def show_mean_sample_frequency(self):
+    #     sf_mean = self.log_file.get_trial_data_from_log('Mean Sample Frequency', self.trial_number)
+    #     self.axes_tracker_1[0].set_title(str(sf_mean) + " Hz", fontsize=15)
 
     def relim_autoscale_3d(self):
         axis = self.fig_tracker_1.get_axes()[0]
@@ -237,76 +237,76 @@ class HandDataVisualization:
             self.plot_next(event)
             plt.pause(self.sleep_time)
 
-    def reset_trial(self, event):
-        self.idx_onset_list[self.trial_number - 1] = -1
-        self.idx_end_list[self.trial_number - 1] = -1
-        self.saved_trial[self.trial_number - 1] = False
-        preprocessed_trial = self.data_handler.get_trial_data_hand_tracker(self.trial_number)
-        self.data_handler.save_trial_data_reach_trajectories(self.trial_number, preprocessed_trial)
-        self.plot_trial()
+    # def reset_trial(self, event):
+    #     self.idx_onset_list[self.trial_number - 1] = -1
+    #     self.idx_end_list[self.trial_number - 1] = -1
+    #     self.saved_trial[self.trial_number - 1] = False
+    #     preprocessed_trial = self.data_handler.get_trial_data_hand_tracker(self.trial_number)
+    #     self.data_handler.save_trial_data_reach_trajectories(self.trial_number, preprocessed_trial)
+    #     self.plot_trial()
 
-    def save_trial(self):
-        if not self.saved_trial[self.trial_number - 1]:
-            self.saved_trial[self.trial_number - 1] = True
+    # def save_trial(self):
+    #     if not self.saved_trial[self.trial_number - 1]:
+    #         self.saved_trial[self.trial_number - 1] = True
+    #
+    #         lb, ub = self.interactive.get_indexes()
+    #
+    #         if self.idx_m_onset == lb:
+    #             self.idx_onset_list[self.trial_number - 1] = self.idx_m_onset
+    #         else:
+    #             self.idx_onset_list[self.trial_number - 1] = lb
+    #             # self.initiation_time = self.temp_processed_trial['t'].iloc[lb]
+    #
+    #         if self.idx_m_end == ub - 1:
+    #             self.idx_end_list[self.trial_number - 1] = self.idx_m_end
+    #         else:
+    #             self.idx_end_list[self.trial_number - 1] = ub - 1
+    #
+    #         idx_1 = self.idx_onset_list[self.trial_number - 1]
+    #         idx_2 = self.idx_end_list[self.trial_number - 1]
+    #         processed_trial = self.temp_processed_trial.iloc[idx_1:idx_2 + 1].copy()
+    #
+    #         initiation_time = processed_trial['t'].iloc[0]
+    #         end_time = processed_trial['t'].iloc[-1]
+    #         movement_time = end_time - initiation_time
+    #
+    #         # ---- SAVE DATA ---- #
+    #         print("SAVING DATA OF TRIAL", self.trial_number)
+    #         self.data_handler.save_trial_data_reach_trajectories(self.trial_number, processed_trial)
+    #         results_log = {'Initiation Time': initiation_time,
+    #                        'Movement Time': movement_time,
+    #                        'Total Time': end_time}
+    #         self.log_file.save_trial_to_log(self.trial_number, results_log)
+    #         results_config = {'dropped_trial': int(self.dropped_trial[self.trial_number - 1]),
+    #                           'idx_1': idx_1,
+    #                           'idx_2': idx_2}
+    #         self.config_file.save_trial_to_config(self.trial_number, results_config)
 
-            lb, ub = self.interactive.get_indexes()
-
-            if self.idx_m_onset == lb:
-                self.idx_onset_list[self.trial_number - 1] = self.idx_m_onset
-            else:
-                self.idx_onset_list[self.trial_number - 1] = lb
-                # self.initiation_time = self.temp_processed_trial['t'].iloc[lb]
-
-            if self.idx_m_end == ub - 1:
-                self.idx_end_list[self.trial_number - 1] = self.idx_m_end
-            else:
-                self.idx_end_list[self.trial_number - 1] = ub - 1
-
-            idx_1 = self.idx_onset_list[self.trial_number - 1]
-            idx_2 = self.idx_end_list[self.trial_number - 1]
-            processed_trial = self.temp_processed_trial.iloc[idx_1:idx_2 + 1].copy()
-
-            initiation_time = processed_trial['t'].iloc[0]
-            end_time = processed_trial['t'].iloc[-1]
-            movement_time = end_time - initiation_time
-
-            # ---- SAVE DATA ---- #
-            print("SAVING DATA OF TRIAL", self.trial_number)
-            self.data_handler.save_trial_data_reach_trajectories(self.trial_number, processed_trial)
-            results_log = {'Initiation Time': initiation_time,
-                           'Movement Time': movement_time,
-                           'Total Time': end_time}
-            self.log_file.save_trial_to_log(self.trial_number, results_log)
-            results_config = {'dropped_trial': int(self.dropped_trial[self.trial_number - 1]),
-                              'idx_1': idx_1,
-                              'idx_2': idx_2}
-            self.config_file.save_trial_to_config(self.trial_number, results_config)
-
-    def save_all_trials(self, event):
-        for trial_number in range(1, self.max_trial_number + 1):
-            if not self.saved_trial[trial_number - 1]:
-                self.saved_trial[trial_number - 1] = True
-
-                idx_1 = self.idx_onset_list[trial_number - 1]
-                idx_2 = self.idx_end_list[trial_number - 1]
-
-                temp_processed_trial = self.data_handler.get_trial_data_hand_tracker(trial_number)
-                processed_trial = temp_processed_trial.iloc[idx_1:idx_2 + 1].copy()
-                initiation_time = processed_trial['t'].iloc[0]
-                end_time = processed_trial['t'].iloc[-1]
-                movement_time = end_time - initiation_time
-
-                # ---- SAVE DATA ---- #
-                self.data_handler.save_trial_data_reach_trajectories(trial_number, processed_trial)
-                results_log = {'Initiation Time': initiation_time, 'Movement Time': movement_time, 'Total Time': end_time}
-                self.log_file.save_trial_to_log(trial_number, results_log)
-                results_config = {'dropped_trial': int(self.dropped_trial[trial_number - 1]), 'idx_1': idx_1, 'idx_2': idx_2}
-                self.config_file.save_trial_to_config(trial_number, results_config)
-
-        print("ALL TRIALS HAVE BEEN SAVED")
+    # def save_all_trials(self, event):
+    #     for trial_number in range(1, self.max_trial_number + 1):
+    #         if not self.saved_trial[trial_number - 1]:
+    #             self.saved_trial[trial_number - 1] = True
+    #
+    #             idx_1 = self.idx_onset_list[trial_number - 1]
+    #             idx_2 = self.idx_end_list[trial_number - 1]
+    #
+    #             temp_processed_trial = self.data_handler.get_trial_data_hand_tracker(trial_number)
+    #             processed_trial = temp_processed_trial.iloc[idx_1:idx_2 + 1].copy()
+    #             initiation_time = processed_trial['t'].iloc[0]
+    #             end_time = processed_trial['t'].iloc[-1]
+    #             movement_time = end_time - initiation_time
+    #
+    #             # ---- SAVE DATA ---- #
+    #             self.data_handler.save_trial_data_reach_trajectories(trial_number, processed_trial)
+    #             results_log = {'Initiation Time': initiation_time, 'Movement Time': movement_time, 'Total Time': end_time}
+    #             self.log_file.save_trial_to_log(trial_number, results_log)
+    #             results_config = {'dropped_trial': int(self.dropped_trial[trial_number - 1]), 'idx_1': idx_1, 'idx_2': idx_2}
+    #             self.config_file.save_trial_to_config(trial_number, results_config)
+    #
+    #     print("ALL TRIALS HAVE BEEN SAVED")
 
     def plot_next(self, event):
-        self.save_trial()
+        # self.save_trial()
         self.zoom_ = False
         self.trial_number += 1
         if self.trial_number <= self.max_trial_number:
@@ -371,7 +371,7 @@ class HandDataVisualization:
 
         self.ax_reset = plt.axes([0.4375, 0.01, 0.075, 0.05])
         self.button_reset = Button(self.ax_reset, "Reset")
-        self.button_reset.on_clicked(self.reset_trial)
+        # self.button_reset.on_clicked(self.reset_trial)
 
         self.ax_next = plt.axes([0.6375, 0.01, 0.075, 0.05])
         self.button_next = Button(self.ax_next, "Next")
@@ -441,46 +441,46 @@ class HandDataVisualization:
             axis.set_zlim(self.z_3dlim[0][0], self.z_3dlim[0][1])
             self.zoom_ = False
 
-    def set_limits(self, t_limits, x_limits, y_limits, z_limits):
-        self.t_limits = t_limits
-        self.x_limits = x_limits
-        self.y_limits = y_limits
-        self.z_limits = z_limits
-        self.apply_limits(self.t_limits, self.x_limits, self.y_limits, self.z_limits)
+    # def set_limits(self, t_limits, x_limits, y_limits, z_limits):
+    #     self.t_limits = t_limits
+    #     self.x_limits = x_limits
+    #     self.y_limits = y_limits
+    #     self.z_limits = z_limits
+    #     self.apply_limits(self.t_limits, self.x_limits, self.y_limits, self.z_limits)
 
-    def apply_limits(self, t_limits, x_limits, y_limits, z_limits):
-        t_limits = re.findall(r'[-+]?\d+(?:\.\d+)?', t_limits)
-        x_limits = re.findall(r'[-+]?\d+(?:\.\d+)?', x_limits)
-        y_limits = re.findall(r'[-+]?\d+(?:\.\d+)?', y_limits)
-        z_limits = re.findall(r'[-+]?\d+(?:\.\d+)?', z_limits)
-
-        axes = self.fig_tracker_1.get_axes()[1:]
-        for ax in axes:
-            if ax.get_xlabel() == 't' and len(t_limits) != 0:
-                ax.set_xlim(float(t_limits[0]), float(t_limits[1]))
-            elif ax.get_xlabel() == 'x' and len(x_limits) != 0:
-                ax.set_xlim(float(x_limits[0]), float(x_limits[1]))
-            elif ax.get_xlabel() == 'y' and len(y_limits) != 0:
-                ax.set_xlim(float(y_limits[0]), float(y_limits[1]))
-            elif ax.get_xlabel() == 'z' and len(z_limits) != 0:
-                ax.set_xlim(float(z_limits[0]), float(z_limits[1]))
-
-            if ax.get_ylabel() == 'x' and len(x_limits) != 0:
-                ax.set_ylim(float(x_limits[0]), float(x_limits[1]))
-            elif ax.get_ylabel() == 'y' and len(y_limits) != 0:
-                ax.set_ylim(float(y_limits[0]), float(y_limits[1]))
-            elif ax.get_ylabel() == 'z' and len(z_limits) != 0:
-                ax.set_ylim(float(z_limits[0]), float(z_limits[1]))
-
-        ax = self.fig_tracker_1.get_axes()[0]
-        if ax.get_xlabel() == 'x' and len(x_limits) != 0:
-            ax.set_xlim(float(x_limits[0]), float(x_limits[1]))
-        if ax.get_ylabel() == 'z' and len(z_limits) != 0:
-            ax.set_ylim(float(z_limits[0]), float(z_limits[1]))
-        if ax.get_zlabel() == 'y' and len(y_limits) != 0:
-            ax.set_zlim(float(y_limits[0]), float(y_limits[1]))
-
-        self.fig_tracker_1.canvas.draw_idle()
+    # def apply_limits(self, t_limits, x_limits, y_limits, z_limits):
+    #     t_limits = re.findall(r'[-+]?\d+(?:\.\d+)?', t_limits)
+    #     x_limits = re.findall(r'[-+]?\d+(?:\.\d+)?', x_limits)
+    #     y_limits = re.findall(r'[-+]?\d+(?:\.\d+)?', y_limits)
+    #     z_limits = re.findall(r'[-+]?\d+(?:\.\d+)?', z_limits)
+    #
+    #     axes = self.fig_tracker_1.get_axes()[1:]
+    #     for ax in axes:
+    #         if ax.get_xlabel() == 't' and len(t_limits) != 0:
+    #             ax.set_xlim(float(t_limits[0]), float(t_limits[1]))
+    #         elif ax.get_xlabel() == 'x' and len(x_limits) != 0:
+    #             ax.set_xlim(float(x_limits[0]), float(x_limits[1]))
+    #         elif ax.get_xlabel() == 'y' and len(y_limits) != 0:
+    #             ax.set_xlim(float(y_limits[0]), float(y_limits[1]))
+    #         elif ax.get_xlabel() == 'z' and len(z_limits) != 0:
+    #             ax.set_xlim(float(z_limits[0]), float(z_limits[1]))
+    #
+    #         if ax.get_ylabel() == 'x' and len(x_limits) != 0:
+    #             ax.set_ylim(float(x_limits[0]), float(x_limits[1]))
+    #         elif ax.get_ylabel() == 'y' and len(y_limits) != 0:
+    #             ax.set_ylim(float(y_limits[0]), float(y_limits[1]))
+    #         elif ax.get_ylabel() == 'z' and len(z_limits) != 0:
+    #             ax.set_ylim(float(z_limits[0]), float(z_limits[1]))
+    #
+    #     ax = self.fig_tracker_1.get_axes()[0]
+    #     if ax.get_xlabel() == 'x' and len(x_limits) != 0:
+    #         ax.set_xlim(float(x_limits[0]), float(x_limits[1]))
+    #     if ax.get_ylabel() == 'z' and len(z_limits) != 0:
+    #         ax.set_ylim(float(z_limits[0]), float(z_limits[1]))
+    #     if ax.get_zlabel() == 'y' and len(y_limits) != 0:
+    #         ax.set_zlim(float(y_limits[0]), float(y_limits[1]))
+    #
+    #     self.fig_tracker_1.canvas.draw_idle()
 
     def draw_stimulus(self, number, pos, size):
         if not self.stimuli_list[number - 1]:
