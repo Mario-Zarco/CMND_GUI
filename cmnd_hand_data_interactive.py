@@ -11,9 +11,9 @@ class HandDataInteractive:
         self.figure_ = figure_
         self.world_axis = axes[0]
         self.plane_axes = axes[1:4]
-        self.axes = axes[4:9]
-        self.labels = ['x', 'y', 'z',
-                       'd', 'v']
+        self.axes = axes[4:7]
+        self.labels = ['x', 'y', 'z']
+                       # 'd', 'v']
         self.draggable_left = False
         self.draggable_right = False
         self.index_left = 0

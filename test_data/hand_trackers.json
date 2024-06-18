@@ -1,0 +1,24 @@
+{
+  "tracker_hand" :
+  {
+    "filename": "controllertracker_movement_T",
+	"extension": ".csv",
+    "time": "time",
+    "position": [
+      "pos_x",
+      "pos_y",
+      "pos_z"
+    ]
+  },
+
+  "tracker_fps":
+  {
+	"filename": "fpstracker_fps_T",
+	"extension": ".csv",
+	"time": "time",
+	"fps": [
+		"fps"
+	]
+  }
+
+}
